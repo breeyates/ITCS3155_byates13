@@ -39,6 +39,11 @@ def has_lower_case(s):
 # if num is does not meet any of the above criteria or is less than
 # or equal to 0 return the num as a string
 def fizz_buzz(num):
-  # YOUR CODE HERE
-  
-  return
+  if num % 3 == 0 and num % 5 == 0:
+    return "FizzBuzz"
+  if num % 3 == 0:
+    return "Fizz"
+  if num % 5 == 0:
+    return "Buzz"
+  elif num <= 0 or num % 3 != 0 or num % 5 != 0:
+    return str(num)
