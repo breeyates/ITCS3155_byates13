@@ -21,9 +21,12 @@ def odd_range(num1, num2):
 # The function should return True indicating that string s has a lower case char
 # otherwise return False
 def has_lower_case(s):
-  # YOUR CODE HERE
+  for i in range (0,len(s)):
+    temp = s[i:i+1]
+    if(ord(temp) >= 97 and ord(temp) <= 122):
+        return True
   
-  return
+  return False
 
 # Part C. fizz_buzz
 # Define a function fizz_buzz(num) that takes an integer num
