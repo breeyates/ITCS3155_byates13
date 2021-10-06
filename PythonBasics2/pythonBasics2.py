@@ -11,33 +11,28 @@
 # to n (including n).
 
 def count_threes(n):
-  count = 0
+    three = n.count('3')
+    six = n.count('6')
+    nine = n.count('9')
 
-  for i in range(1, n+1):
-    if(i % 3 == 0):
-      count += 1
+    d = {3: three, 6: six, 9: nine}
 
-  return count
+    return max(d, key=lambda k: d[k])
 
 
 # Part B. longest_consecutive_repeating_char
 # Define a function longest_consecutive_repeating_char(s) that takes
 # a string s and returns the character that has the longest consecutive repeat.
 def longest_consecutive_repeating_char(s):
+    d = {c: 1 for c in s}
 
-  character = ""
-  count = 0
-  answer = 0
+    for c in range(len(s) - 1):
+        if s[c] == s[c + 1]:
+            d[s[c]] += 1
 
-  for i in range(0, len(s)-1):
-    if s[i] != s[i+1]:
-      count =1
+    temp = max(d.values())
 
-  if (count > answer):
-      answer = count
-      character = s[i]
-
-  return character
+    return [key for key, value in d.items() if value == temp]
 
 
 # Part C. is_palindrome
@@ -47,16 +42,13 @@ def longest_consecutive_repeating_char(s):
 # forwards. Treat capital letters the same as lowercase ones
 # and ignore spaces (i.e. case insensitive).
 def is_palindrome(s):
+    value = False
 
-  value = False
+    for i in range(0, len(s) - 1):
+        s.replace(" ", "")
+        s = s.lower()
 
-  for i in range(0, len(s)-1):
-      s.replace(" ", "")
-      s = s.lower()
+    if s == s[0:-1]:
+        value = True
 
-  if s == s[0:-1]:
-    value = True
-
-  return value
-
-
+    return value
