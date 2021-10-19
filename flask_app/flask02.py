@@ -20,14 +20,16 @@ def index():
 @app.route('/notes')
 def get_notes():
     notes = {1: {'title': 'First note', 'text': 'This is my first note', 'date': '10-18-2021'},
-             2: {'title': 'Second note', 'text': 'This is my second note', 'date': '10-19-2021'}
+             2: {'title': 'Second note', 'text': 'This is my second note', 'date': '10-19-2021'},
+             3: {'title': 'Third note', 'text': 'This is my third note', 'date': '10-20-2021'}
              }
     return render_template('notes.html', notes=notes)
 
 @app.route('/notes/<note_id>')
 def get_note(note_id):
     notes = {1: {'title': 'First note', 'text': 'This is my first note', 'date': '10-18-2021'},
-             2: {'title': 'Second note', 'text': 'This is my second note', 'date': '10-19-2021'}
+             2: {'title': 'Second note', 'text': 'This is my second note', 'date': '10-19-2021'},
+             3: {'title': 'Third note', 'text': 'This is my third note', 'date': '10-20-2021'}
              }
     return render_template('note.html', note=notes[int(note_id)])
 
