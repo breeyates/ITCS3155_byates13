@@ -10,7 +10,8 @@
     </head>
         <nav>
             <a href="{{ url_for('index') }}"> Home</a> ||
-            <a href="{{ url_for('get_notes') }}"> My Notes</a>
+            <a href="{{ url_for('get_notes') }}"> My Notes</a> ||
+            <a href="{{ url_for('new_note') }}"> New Note</a>
         </nav>
     <body>
         <h1>Welcome {{user.name}} to the 49er Notes App!</h1>
