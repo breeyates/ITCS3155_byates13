@@ -8,6 +8,10 @@
         <!-- styles -->
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     </head>
+        <nav>
+            <a href="{{ url_for('index') }}"> Home</a> ||
+            <a href="{{ url_for('get_notes') }}"> My Notes</a>
+        </nav>
     <body>
         <h1>Listing notes</h1>
 
@@ -18,7 +22,7 @@
             </tr>
             {% for key, value in notes.items() %}
             <tr>
-                <td>{{ value.title }}</td>
+                <td><a href="notes/{{key}}">{{ value.title}}</a></td>
                 <td>{{ value.date }}</td>
             </tr>
             {% endfor %}

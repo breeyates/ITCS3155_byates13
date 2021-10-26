@@ -8,8 +8,12 @@
         <!-- styles -->
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     </head>
+        <nav>
+            <a href="{{ url_for('index') }}"> Home</a> ||
+            <a href="{{ url_for('get_notes') }}"> My Notes</a>
+        </nav>
     <body>
-        <h1>Note detials</h1>
+        <h1>Note details</h1>
 
         <table>
             <tr>
