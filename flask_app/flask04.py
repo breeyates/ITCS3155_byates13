@@ -6,6 +6,8 @@ from flask import Flask  # Flask is the web app that we will customize
 from flask import render_template
 from flask import redirect, url_for
 from database import db
+from models import Note as Note
+from models import User as User
 
 from flask import request
 
@@ -18,32 +20,38 @@ db.init_app(app)
 with app.app_context():
     db.create_all()   # run under the app context
 # create an app
-notes = {1: {'title': 'First note', 'text': 'This is my first note', 'date': '10-18-2021'},
-             2: {'title': 'Second note', 'text': 'This is my second note', 'date': '10-19-2021'},
-             3: {'title': 'Third note', 'text': 'This is my third note', 'date': '10-20-2021'}
-             }
+#notes = {1: {'title': 'First note', 'text': 'This is my first note', 'date': '10-18-2021'},
+ #            2: {'title': 'Second note', 'text': 'This is my second note', 'date': '10-19-2021'},
+  #           3: {'title': 'Third note', 'text': 'This is my third note', 'date': '10-20-2021'}
+   #          }
 
 
 # @app.route is a decorator. It gives the function "index" special powers.
 # In this case it makes it so anyone going to "your-url/" makes this function
 # get called. What it returns is what is shown as the web page
+@app.route('/')
 @app.route('/index')
 def index():
-    a_user = {'name': 'Bree', 'email': 'byates13@uncc.edu'}
+    a_user = db.session.query(User).filter_by(email='breeyates13@uncc.edu')
     return render_template('index.html', user=a_user)
 
 
 @app.route('/notes')
 def get_notes():
-    a_user = {'name': 'Bree', 'email': 'byates13@uncc.edu'}
+    a_user = db.session.query(User).filter_by(email='breeyates13@uncc.edu')
 
-    return render_template('notes.html', notes=notes,user=a_user)
+    #retrieve notes from database
+    my_notes = db.session.query(Note).all()
+
+    return render_template('notes.html', notes=my_notes,user=a_user)
 
 @app.route('/notes/<note_id>')
 def get_note(note_id):
-    a_user = {'name': 'Bree', 'email': 'byates13@uncc.edu'}
+    a_user = db.session.query(User).filter_by(email='breeyates13@uncc.edu')
 
-    return render_template('note.html', note=notes[int(note_id)], user=a_user)
+    my_note = db.session.query(Note).filter_by(id=note_id)
+
+    return render_template('note.html', note=my_note, user=a_user)
 
 @app.route('/notes/new', methods=['GET', 'POST'])
 def new_note():
@@ -56,12 +64,14 @@ def new_note():
         from datetime import date
         today = date.today()
         today = today.strftime("%m-%d-%Y")
-        id = len(notes)+1
-        notes[id] = {'title': title, 'text': text, 'date': today}
+        new_record = Note(title, text, today)
+        db.session.add(new_record)
+        db.session.commit()
 
         return redirect(url_for('get_notes',name = a_user))
 
     else:
+        db.session.query(User).filter_by(email='breeyates13@uncc.edu')
         return render_template('new.html', user=a_user)
 
 
